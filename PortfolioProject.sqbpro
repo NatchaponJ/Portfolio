@@ -266,3 +266,19 @@ where dea.continent is not null
 </sql><sql name="SQL 12">
 	SELECT * FROM PercentPopulationVaccinated
 	</sql><current_tab id="11"/></tab_sql></sqlb_project>
+
+-- people fully vacinated vs population in thailand
+
+SELECT
+	d.date,
+	d.location,
+	d.population,
+	v.total_vaccinations,
+	v.people_fully_vaccinated,
+	(v.people_fully_vaccinated/d.population)*100 FullyVacPercent
+FROM CovidVacination v
+JOIN CovidDeath d
+	on v.date = d.date
+	AND v.location = d.location
+WHERE d.location like 'thai%' AND v.total_vaccinations is not NULL
+ORDER by d.date
